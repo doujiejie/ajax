@@ -18,17 +18,24 @@
         function addImage(data) {
             let htmlContent = '';
             const firstImage = data.results[0];
+            const images = data.results;
 
-            if (firstImage) {
-                htmlContent = `<figure>
-            <img src="${firstImage.urls.small}" alt="${searchedForText}">
-            <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
-        </figure>`;
+            //     if (firstImage) {
+            //         htmlContent = `<figure>
+            //     <img src="${firstImage.urls.full}" alt="${searchedForText}">
+            //     <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
+            // </figure>`;
+            //     }
+            if (images) {
+                for (var i = 0; i < 10; i++) {
+                    htmlContent = `<figure><img src="${images[i].urls.full}" alt="${searchedForText}">
+                    <figcaption>${searchedForText} by ${images[i].user.name}</figcaption></figure>`;
+                    responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
+                };
             } else {
                 htmlContent = 'Unfortunately, no image was returned for your search.'
+                responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
             }
-
-            responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
         };
 
         function requestImageError(e, part) {
@@ -52,7 +59,7 @@
                     </li>`).join('') + '</ul>';
 
             } else {
-                htmlContent = ` < div class = "error-no-articles" > No articles available < /div>`;
+                htmlContent = ` <div class = "error-no-articles"> No articles available </div>`;
             }
             responseContainer.insertAdjacentHTML('afterend', htmlContent);
         };

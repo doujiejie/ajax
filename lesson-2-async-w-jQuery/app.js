@@ -13,21 +13,23 @@
 
         function requestError(e, part) {
             console.log(e);
-            responseContainer.insertAdjacentHTML('beforeend', ` < div class = "error-no-articles" > No articles available < /div>`);
+            responseContainer.insertAdjacentHTML('beforeend', ` <div class = "error-no-articles"> No articles available </div>`);
         }
         // const articleRequest = new XMLHttpRequest();
         // articleRequest.onload = addArticles;
         // articleRequest.open('GET', `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=ed11ce69c5b2490e9a4c4e41e1aa686d`);
         // articleRequest.send();
         $.ajax({
-            url: `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=ed11ce69c5b2490e9a4c4e41e1aa686d`,
+            url: `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=ed11ce69c5b2490e9a4c4e41e1aa686d&sort=newest`,
             // type: 'default GET (Other values: POST)',
             // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
             // data: {param1: 'value1'},
             // headers:{
             // Authorization: 'Client-ID 123abc456def'
             // }
-        }).done(addArticles);
+        }).done(addArticles).fail(function(err){
+            console.log(err);
+        });
         // .always(function() {
         //     console.log("complete");
         // });
@@ -42,7 +44,7 @@
                     </li>`).join('') + '</ul>';
 
             } else {
-                htmlContent = ` < div class = "error-no-articles" > No articles available < /div>`;
+                htmlContent = `<div class = "error-no-articles" > No articles available </div>`;
             }
             responseContainer.insertAdjacentHTML('afterend', htmlContent);
         }
